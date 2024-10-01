@@ -1009,7 +1009,7 @@
     node-forge "^1.2.1"
     nullthrows "^1.1.1"
 
-"@expo/config-plugins@8.0.9", "@expo/config-plugins@~8.0.0-beta.0", "@expo/config-plugins@~8.0.8":
+"@expo/config-plugins@8.0.9", "@expo/config-plugins@~8.0.0", "@expo/config-plugins@~8.0.0-beta.0", "@expo/config-plugins@~8.0.8":
   version "8.0.9"
   resolved "https://registry.yarnpkg.com/@expo/config-plugins/-/config-plugins-8.0.9.tgz#c3b05dbed0c690a4912c1b9f4420f2c6ad4b00cc"
   integrity sha512-dNCG45C7BbDPV9MdWvCbsFtJtVn4w/TJbb5b7Yr6FA8HYIlaaVM0wqUMzTPmGj54iYXw8X/Vge8uCPxg7RWgeA==
@@ -7326,6 +7326,13 @@ react-native-helmet-async@2.0.4:
     invariant "^2.2.4"
     react-fast-compare "^3.2.2"
     shallowequal "^1.1.0"
+
+react-native-nfc-manager@^3.16.0:
+  version "3.16.0"
+  resolved "https://registry.yarnpkg.com/react-native-nfc-manager/-/react-native-nfc-manager-3.16.0.tgz#e928bcfc7b857aa3b02943f241c391053db0cb6e"
+  integrity sha512-piwkoDhq3UYEH9I6oA5RylM0ZPCxg8shUAMFgTT75C8+UKxwrb5Oss2TGRABQevfUXEIaNqwicYxqGYEuNbMDQ==
+  dependencies:
+    "@expo/config-plugins" "~8.0.0"
 
 react-native-permissions@^2.0.2:
   version "2.2.2"

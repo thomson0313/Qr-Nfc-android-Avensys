@@ -220,7 +220,7 @@ const QRCodeReader = ({ route, navigation }) => {
             </Text>
             <Image
               source={require("./assets/qr-code.png")}
-              style={{ margin: 20 }}
+              style={{ margin: 20, height: 120, width: 120 }}
             ></Image>
 
             <TouchableOpacity onPress={activeQR} style={styles.buttonScan}>

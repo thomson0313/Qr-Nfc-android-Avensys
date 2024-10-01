@@ -5,6 +5,7 @@ import Register from "./screens/Register";
 import Home from "./screens/Home";
 import Remarks from "./screens/Remarks";
 import QRCodeReader from "./screens/QRCodeReader";
+import NFCScanner from "./screens/NFCScanner";
 
 const Stack = createStackNavigator();
 
@@ -34,6 +35,11 @@ const Route = () => {
       <Stack.Screen
         name="QRCodeReader"
         component={QRCodeReader}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NFCScanner"
+        component={NFCScanner}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

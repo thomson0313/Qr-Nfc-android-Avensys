@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "FollowApp",
-    "slug": "FollowApp",
-    "owner": "webserver",
+    "slug": "nfc",
+    "owner": "thomson0313",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -39,7 +39,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "f060dc34-26c5-4032-924c-1dc88ba30c90"
+        "projectId": "61ed5469-b229-40e0-8468-f2be69d65f61"
       }
     }
   }
