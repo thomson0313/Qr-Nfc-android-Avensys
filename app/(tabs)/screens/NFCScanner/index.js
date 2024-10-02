@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { TouchableOpacity, Text, Linking, View, Image, Dimensions, ActivityIndicator } from "react-native";
+import { TouchableOpacity, Text, Linking, View, Image, Dimensions, ActivityIndicator, PermissionsAndroid, Alert } from "react-native";
 import NfcManager, { NfcTech } from "react-native-nfc-manager";
 import axios from "axios";
 import moment from "moment";
@@ -138,13 +138,40 @@ const NFCScanner = ({ route, navigation }) => {
         };
     }
 
+
     useEffect(() => {
-        NfcManager.start()
-            .catch(error => {
-                console.warn("NFC Manager failed to start:", error);
-            });
-    
-        // Cleanup function to stop NFC manager
+        const requestNfcPermission = async () => {
+            try {
+                const hasPermission = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.NFC);
+                if (hasPermission) {
+                    console.log("You already have NFC permission");
+                    await NfcManager.start();
+                } else {
+                    const granted = await PermissionsAndroid.request(
+                        PermissionsAndroid.PERMISSIONS.NFC,
+                        {
+                            title: "NFC Permission",
+                            message: "This app needs access to your NFC.",
+                            buttonNeutral: "Ask Me Later",
+                            buttonNegative: "Cancel",
+                            buttonPositive: "OK"
+                        }
+                    );
+
+                    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                        console.log("You can use NFC");
+                        await NfcManager.start();
+                    } else {
+                        Alert.alert("NFC permission denied");
+                    }
+                }
+            } catch (err) {
+                console.warn(err);
+            }
+        };
+
+        requestNfcPermission();
+
         return () => {
             NfcManager.stop();
             NfcManager.setEventListenerScheme('stateChange', 'remove');
@@ -155,22 +182,26 @@ const NFCScanner = ({ route, navigation }) => {
         try {
             await NfcTech.Ndef.connect();
             const tag = await NfcTech.Ndef.getNdefMessage();
-            if (tag) {
-                const nfcData = tag.ndefMessage[0].payload; // Adjust this based on your NFC data structure
+            if (tag && tag.ndefMessage && tag.ndefMessage.length > 0) {
+                const nfcData = tag.ndefMessage[0].payload;
                 const decodedData = new TextDecoder("utf-8").decode(nfcData);
                 setScanResult(decodedData);
                 const formattedTimestamp = moment().format("DD/MM/YYYY HH:mm:ss");
                 setTimestamp(formattedTimestamp);
             } else {
-                console.error("NFC tag is null");
+                Alert.alert("Error", "NFC tag is null or invalid");
+                console.error("NFC tag is null or invalid");
             }
         } catch (ex) {
             console.warn(ex);
+            Alert.alert("Error", "An error occurred while reading NFC. Please try again.");
         } finally {
             NfcTech.Ndef.setEventListenerEnabled(false);
             await NfcTech.Ndef.disconnect();
         }
     };
+
+
 
     const handleLogin = async () => {
         setLoading(true);
